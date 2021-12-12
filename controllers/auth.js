@@ -52,7 +52,7 @@ const createAccount = async (req, res) => {
   }
 };
 
-const loginAccount = async (req, res) => {
+const loginAccount = async(req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -66,7 +66,7 @@ const loginAccount = async (req, res) => {
     }
 
     // Confirm password
-    const validPassword = bcrypt.compareSync(password, user.password);
+    const validPassword = await bcrypt.compareSync(password, user.password);
 
     if (!validPassword) {
       return res.status(400).json({
@@ -78,7 +78,7 @@ const loginAccount = async (req, res) => {
     // Generate JSON Web Token
     const token = await generateJWT(user.id, user.name);
 
-    res.status(200).json({
+    return res.status(200).json({
       ok: true,
       uuid: user.id,
       name: user.name,
@@ -92,7 +92,7 @@ const loginAccount = async (req, res) => {
     });
   }
 
-  res.json({
+  return res.json({
     ok: true,
     action: "login account",
     email,
