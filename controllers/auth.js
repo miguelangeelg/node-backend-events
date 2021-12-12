@@ -89,6 +89,7 @@ const loginAccount = async(req, res) => {
     res.status(500).json({
       ok: false,
       action: "Contact the admin",
+      error: error
     });
   }
 };
