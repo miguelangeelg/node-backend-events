@@ -66,7 +66,7 @@ const loginAccount = async(req, res) => {
     }
 
     // Confirm password
-    const validPassword = await bcrypt.compareSync(password, user.password);
+    const validPassword = bcrypt.compareSync(password, user.password);
 
     if (!validPassword) {
       return res.status(400).json({
@@ -84,20 +84,13 @@ const loginAccount = async(req, res) => {
       name: user.name,
       token,
     });
+
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       ok: false,
       action: "Contact the admin",
     });
   }
-
-  return res.json({
-    ok: true,
-    action: "login account",
-    email,
-    password,
-  });
 };
 
 const revalidateToken = async(req, res) => {
